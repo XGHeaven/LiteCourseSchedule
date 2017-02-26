@@ -74,8 +74,9 @@ public class Course {
         Course course;
         for (int i=0; i<courses.size(); i++) {
             course = courses.get(i);
-            if (course != null && !course.isDivide()) {
+            if (!course.isDivide()) {
                 courses.remove(i);
+                i--;
             }
         }
     }

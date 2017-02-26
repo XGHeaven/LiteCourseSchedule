@@ -82,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         google.connect();
 
-        Course.add(new Course("name","1",1,1,1));
-
         toolbar = (Toolbar)findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
