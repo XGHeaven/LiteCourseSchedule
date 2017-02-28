@@ -36,7 +36,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
         private RecyclerView.Adapter adapter;
         public CourseViewHolder(View itemView, final Context context, final CourseAdapter adapter) {
             super(itemView, context);
-            body = (LinearLayout)itemView;
+//            body = (LinearLayout)itemView;
             name = (TextView) itemView.findViewById(R.id.course_name);
             info = (TextView) itemView.findViewById(R.id.course_info);
             more_action = (FrameLayout) itemView.findViewById(R.id.course_more_action);
@@ -63,7 +63,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
                 @Override
                 public void onClick(View v) {
                     CourseAdd dialog = new CourseAdd(context, course);
-                    final int oPos = adapter.courseList.indexOf(course);
                     dialog.show(new CourseAdd.CourseAddedCallback() {
                         @Override
                         public void run(Course course, boolean isEdit) {

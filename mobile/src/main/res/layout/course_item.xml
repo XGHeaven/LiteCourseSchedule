@@ -1,75 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_height="wrap_content"
-    android:id="@+id/course_item_body"
+    android:layout_width="match_parent"
+    card_view:cardElevation="4dp"
+    android:background="@color/white"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     >
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal" android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
-        android:background="@color/white"
-        android:elevation="2dp"
-        >
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/course_name"
-                android:text="Name"
-                android:textSize="16sp"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/course_info"
-                android:text="Info"
-                android:textSize="14sp"/>
-        </LinearLayout>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="12sp"
-            android:id="@+id/more_action_button"
-            android:text="More"
-            />
-    </LinearLayout>
-    <FrameLayout
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/course_more_action"
-        android:background="@color/button_sheet_background"
+        android:id="@+id/course_item_body"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         >
-        <LinearLayout
-            android:layout_width="match_parent"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal" android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
             >
-            <ImageButton
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="@string/list_edit"
-                android:src="@drawable/ic_edit_black_24dp"
-                android:id="@+id/list_edit"
-                />
-            <ImageButton
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/course_name"
+                    android:text="Name"
+                    android:textSize="16sp"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/course_info"
+                    android:text="Info"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+            <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/list_delete"
-                android:src="@drawable/ic_delete_black_24dp"
-                android:id="@+id/list_delete"
+                android:layout_height="match_parent"
+                android:textSize="12sp"
+                android:id="@+id/more_action_button"
+                android:text="More"
                 />
         </LinearLayout>
-    </FrameLayout>
-</LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/course_more_action"
+            android:background="@color/button_sheet_background"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                >
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/list_edit"
+                    android:src="@drawable/ic_edit_black_24dp"
+                    android:id="@+id/list_edit"
+                    />
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/list_delete"
+                    android:src="@drawable/ic_delete_black_24dp"
+                    android:id="@+id/list_delete"
+                    />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
