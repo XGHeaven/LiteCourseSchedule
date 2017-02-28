@@ -29,8 +29,15 @@
     <string name="course_delete_success">Course Deleted Success!</string>
     <string name="course_edit_success">Course Edited Success!</string>
 
+    <string name="course_syncing">Syncing</string>
+    <string name="course_sync_success">Synced Success</string>
+    <string name="course_sync_fail">Synced Failed</string>
+
     <string name="list_edit">Edit</string>
     <string name="list_delete">Delete</string>
 
     <string name="not_found_scanner">Please Install "Barcode Scanner" to Scan</string>
+
+    <string name="about_title">About</string>
+    <string name="about_text">Lite Course Schedule, Very Lite, Just Lite. Welcome to report issue.</string>
 </resources>

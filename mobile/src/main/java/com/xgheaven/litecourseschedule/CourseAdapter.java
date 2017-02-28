@@ -1,21 +1,18 @@
 package com.xgheaven.litecourseschedule;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHolder> {
     private static final int DIVIDE_TYPE = 0, DATA_TYPE = 1;
+    private CourseList courseList;
 
     public static abstract class BaseViewHolder extends RecyclerView.ViewHolder {
 
@@ -37,7 +34,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
         private boolean isExpand = false;
         private Course course;
         private RecyclerView.Adapter adapter;
-        public CourseViewHolder(View itemView, final Context context, final RecyclerView.Adapter adapter) {
+        public CourseViewHolder(View itemView, final Context context, final CourseAdapter adapter) {
             super(itemView, context);
             body = (LinearLayout)itemView;
             name = (TextView) itemView.findViewById(R.id.course_name);
@@ -55,10 +52,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
             more_action.findViewById(R.id.list_delete).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = Course.remove(course);
+                    int position = adapter.courseList.remove(course);
                     CourseViewHolder.this.adapter.notifyItemRemoved(position);
                     ((MainActivity)CourseViewHolder.this.context).syncWithWear();
-                    Msg.info(((MainActivity)CourseViewHolder.this.context).course_list, R.string.course_delete_success);
+                    Msg.info(((MainActivity)CourseViewHolder.this.context).courseView, R.string.course_delete_success);
                 }
             });
 
@@ -66,14 +63,16 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
                 @Override
                 public void onClick(View v) {
                     CourseAdd dialog = new CourseAdd(context, course);
-                    final int oPos = Course.indexOf(course);
+                    final int oPos = adapter.courseList.indexOf(course);
                     dialog.show(new CourseAdd.CourseAddedCallback() {
                         @Override
-                        public void run(int position) {
-                            adapter.notifyItemMoved(oPos, position);
-                            adapter.notifyItemChanged(position);
+                        public void run(Course course, boolean isEdit) {
+                            int oPos = adapter.courseList.remove(course);
+                            int nPos = adapter.courseList.add(course);
+                            adapter.notifyItemMoved(oPos, nPos);
+                            adapter.notifyItemChanged(nPos);
                             ((MainActivity)CourseViewHolder.this.context).syncWithWear();
-                            Msg.info(((MainActivity)CourseViewHolder.this.context).course_list, R.string.course_edit_success);
+                            Msg.info(((MainActivity)CourseViewHolder.this.context).courseView, R.string.course_edit_success);
                         }
                     });
                 }
@@ -121,7 +120,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
         }
     }
 
-    public CourseAdapter() {}
+    public CourseAdapter(CourseList courseList) {
+        this.courseList = courseList;
+    }
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -138,23 +139,21 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
                 vh = new DivideViewHolder(v, parent.getContext());
         }
 
-        Log.d("CourseAdapter", viewType + "");
         return vh;
     }
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        holder.setData(Course.get(position));
+        holder.setData(courseList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        Log.i("CourseAdapter", Course.size() + "");
-        return Course.size();
+        return courseList.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return Course.isDevide(position) ? DIVIDE_TYPE : DATA_TYPE;
+        return courseList.isDivide(position) ? DIVIDE_TYPE : DATA_TYPE;
     }
 }

@@ -2,6 +2,7 @@ package com.xgheaven.litecourseschedule;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -16,7 +17,7 @@ import org.w3c.dom.Text;
 public class CourseAdd implements DialogInterface.OnClickListener{
 
     public interface CourseAddedCallback {
-        void run(int position);
+        void run(Course course, boolean isEdit);
     }
 
     private AlertDialog.Builder builder;
@@ -42,10 +43,10 @@ public class CourseAdd implements DialogInterface.OnClickListener{
 
     public void show() {
         if (isEdit) {
-            ((EditText)(view.findViewById(R.id.course_add_name+1))).setText(course.getName());
-            ((EditText)(view.findViewById(R.id.course_add_classroom+1))).setText(course.getClassroom());
-            ((TextView)(view.findViewById(R.id.course_add_start+1))).setText(course.getStart()+"");
-            ((EditText)(view.findViewById(R.id.course_add_last+1))).setText(course.getLast()+"");
+            ((TextInputEditText)(view.findViewById(R.id.course_add_name+1))).setText(course.getName());
+            ((TextInputEditText)(view.findViewById(R.id.course_add_classroom+1))).setText(course.getClassroom());
+            ((TextInputEditText)(view.findViewById(R.id.course_add_start+1))).setText(course.getStart()+"");
+            ((TextInputEditText)(view.findViewById(R.id.course_add_last+1))).setText(course.getLast()+"");
             ((Spinner)(view.findViewById(R.id.course_add_day))).setSelection(course.getDay());
         }
         builder.create().show();
@@ -73,20 +74,19 @@ public class CourseAdd implements DialogInterface.OnClickListener{
             return;
         }
 
-        int position;
+        Course c;
         if (isEdit) {
             course.setName(name);
             course.setClassroom(classroom);
             course.setStart(start);
             course.setLast(last);
             course.setDay(day);
-            Course.remove(course);
-            position = Course.add(course);
+            c = course;
         } else {
-            position = Course.add(new Course(name, classroom, start, last, day));
+            c = new Course(name, classroom, start, last, day);
         }
-        Log.i("CourseAdd", "Add to " + position);
-        callback.run(position);
+        Log.i("CourseAdd", "Success " + (isEdit ? "Edit" : "Add"));
+        callback.run(c, isEdit);
     }
 
     private String getString(int resource) throws Exception {
