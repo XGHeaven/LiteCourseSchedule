@@ -17,6 +17,11 @@ import org.w3c.dom.Text;
 public class CourseAdapter extends WearableRecyclerView.Adapter<CourseAdapter.BaseViewHolder> {
 
     private final int DIVIDE_TYPE = 0, DATA_TYPE = 1;
+    private CourseList courseList;
+
+    public CourseAdapter(CourseList courseList) {
+        this.courseList = courseList;
+    }
 
     public static abstract class BaseViewHolder extends WearableRecyclerView.ViewHolder {
 
@@ -72,7 +77,7 @@ public class CourseAdapter extends WearableRecyclerView.Adapter<CourseAdapter.Ba
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder vh = null;
-        View v = null;
+        View v;
         switch (viewType) {
             case DIVIDE_TYPE:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_subheader, null);
@@ -89,17 +94,17 @@ public class CourseAdapter extends WearableRecyclerView.Adapter<CourseAdapter.Ba
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        holder.setData(Course.get(position));
+        holder.setData(courseList.get(position));
     }
 
     @Override
     public int getItemViewType(int position) {
-        return Course.isDevide(position) ? DIVIDE_TYPE : DATA_TYPE;
+        return courseList.isDivide(position) ? DIVIDE_TYPE : DATA_TYPE;
     }
 
     @Override
     public int getItemCount() {
-        return Course.size();
+        return courseList.size();
     }
 
 }

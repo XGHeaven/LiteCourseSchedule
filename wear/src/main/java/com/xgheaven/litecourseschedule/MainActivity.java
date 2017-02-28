@@ -4,12 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.wearable.activity.WearableActivity;
-import android.support.wearable.view.BoxInsetLayout;
 import android.support.wearable.view.DefaultOffsettingHelper;
 import android.support.wearable.view.WearableRecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -20,18 +17,14 @@ import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
 import com.google.android.gms.wearable.DataItem;
 import com.google.android.gms.wearable.DataItemBuffer;
-import com.google.android.gms.wearable.DataMap;
 import com.google.android.gms.wearable.Wearable;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class MainActivity extends WearableActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, DataApi.DataListener{
 
-    private WearableRecyclerView course_list;
+    private WearableRecyclerView courseView;
     private CourseAdapter adapter;
     private GoogleApiClient google;
+    private CourseList courseList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +37,14 @@ public class MainActivity extends WearableActivity implements GoogleApiClient.On
                 .addApi(Wearable.API)
                 .build();
 
-        course_list = (WearableRecyclerView)findViewById(R.id.course_list);
-        course_list.setCenterEdgeItems(true);
-        course_list.setOffsettingHelper(new DefaultOffsettingHelper());
-        course_list.setCircularScrollingGestureEnabled(true);
-        adapter = new CourseAdapter();
-        course_list.setAdapter(adapter);
+        courseList = new CourseList(getApplicationContext());
+        courseList.load();
+        courseView = (WearableRecyclerView)findViewById(R.id.course_list);
+        courseView.setCenterEdgeItems(true);
+        courseView.setOffsettingHelper(new DefaultOffsettingHelper());
+        courseView.setCircularScrollingGestureEnabled(true);
+        adapter = new CourseAdapter(courseList);
+        courseView.setAdapter(adapter);
 
         updateCourse();
     }
@@ -89,8 +84,8 @@ public class MainActivity extends WearableActivity implements GoogleApiClient.On
         for (DataEvent event : dataEventBuffer) {
             DataItem dataItem = event.getDataItem();
             if (dataItem.getUri().getPath().equals("/courses")) {
-                Course.removeAll();
-                Course.addFromJSON(dataItem.getData());
+                courseList.clear();
+                courseList.load(new String(dataItem.getData()));
                 adapter.notifyDataSetChanged();
             }
         }
@@ -106,8 +101,8 @@ public class MainActivity extends WearableActivity implements GoogleApiClient.On
                 for (DataItem data : dataItems) {
                     Log.d("CourseData", data.getUri().getPath());
                     if (data.getUri().getPath().equals("/courses")) {
-                        Course.removeAll();
-                        Course.addFromJSON(data.getData());
+                        courseList.clear();
+                        courseList.load(new String(data.getData()));
                         adapter.notifyDataSetChanged();
                         Log.i("CourseData", "Updated");
                     }
