@@ -78,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
                 });
                 break;
             case R.id.menu_add_from_scan:
+                Log.i("Scan", "Start Scan");
                 IntentIntegrator intentIntegrator = new IntentIntegrator(this);
                 intentIntegrator.initiateScan();
-                Log.i("Scan", "Start Scan");
                 break;
             case R.id.menu_sync:
                 syncWithWear();
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        courseList = new CourseList(getApplicationContext());
+        courseList = CourseList.getInstance(this);
         courseList.load();
 
         google = new GoogleApiClient.Builder(this)
@@ -116,6 +116,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+        System.out.println(intent);
+
+        if (requestCode == 100) {
+            if (intent != null) {
+                int index = intent.getIntExtra("editedIndex", -1);
+                if (index != -1) {
+                    courseAdapter.notifyItemChanged(index);
+                }
+            }
+            return;
+        }
+
+        // qrcode scan
+
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
         if (result == null) {
@@ -124,14 +139,17 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+
         String string = result.getContents();
-        Log.d("Scan", string);
-
-        courseList.clear();
-        courseList.load(string);
-        courseAdapter.notifyDataSetChanged();
-
-        Msg.info(courseView, R.string.course_add_success);
+        try {
+            Log.d("Scan", string);
+            courseList.clear();
+            courseList.load(string);
+            courseAdapter.notifyDataSetChanged();
+            Msg.info(courseView, R.string.course_add_success);
+        } catch (Exception e) {
+            Msg.info(courseView, R.string.course_scan_failed);
+        }
     }
 
     public void syncWithWear() {

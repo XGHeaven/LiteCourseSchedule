@@ -40,4 +40,5 @@
 
     <string name="about_title">About</string>
     <string name="about_text">Lite Course Schedule, Very Lite, Just Lite. Welcome to report issue.</string>
+    <string name="course_scan_failed">Course Scan Failed</string>
 </resources>

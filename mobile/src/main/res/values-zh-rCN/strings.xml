@@ -1,4 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">轻课程表</string>
+    <string-array name="week_name">
+        <item>周一</item>
+        <item>周二</item>
+        <item>周三</item>
+        <item>周四</item>
+        <item>周五</item>
+        <item>周六</item>
+        <item>周日</item>
+    </string-array>
+
+    <string name="menu_add">添加课程</string>
+    <string name="menu_add_from_scan">扫描二维码</string>
+    <string name="menu_sync">同步到手表</string>
+    <string name="menu_about">关于</string>
+
+    <string name="course_add_title">请输入课程</string>
+    <string name="course_add_confirm">添加</string>
+    <string name="course_add_cancel">取消</string>
+    <string name="course_add_save">保存</string>
+    <string name="course_add_name">课程名称</string>
+    <string name="course_add_classroom">课程教室</string>
+    <string name="course_add_start">课程开始时间</string>
+    <string name="course_add_last">课程持续时间</string>
+    <string name="course_add_day">课程日期</string>
+
+    <string name="course_add_success">课程添加成功!</string>
+    <string name="course_delete_success">课程删除成功!</string>
+    <string name="course_edit_success">课程编辑成功!</string>
+
+    <string name="course_syncing">同步中</string>
+    <string name="course_sync_success">同步成功</string>
+    <string name="course_sync_fail">同步失败</string>
+
+    <string name="list_edit">编辑</string>
+    <string name="list_delete">删除</string>
+
+    <string name="not_found_scanner">请安装 "Barcode Scanner" 扫描二维码</string>
+
+    <string name="about_title">关于</string>
+    <string name="about_text">轻课程表, 轻, 仅仅是轻. 欢迎反馈问题.</string>
+    <string name="course_scan_failed">课程扫描失败！</string>
 </resources>

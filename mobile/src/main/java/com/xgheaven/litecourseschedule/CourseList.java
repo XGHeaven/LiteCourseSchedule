@@ -16,7 +16,18 @@ public class CourseList {
     private Context context;
     private SharedPreferences preferences;
 
-    public CourseList(Context context) {
+    private static CourseList _course;
+
+    public static CourseList getInstance(Context context) {
+        _course = new CourseList(context);
+        return _course;
+    }
+
+    public static CourseList getInstance() {
+        return _course;
+    }
+
+    private CourseList(Context context) {
         courses = new ArrayList<>(Arrays.asList(
                 new Course(Course.MON), new Course(Course.TUE),
                 new Course(Course.WED), new Course(Course.THU),

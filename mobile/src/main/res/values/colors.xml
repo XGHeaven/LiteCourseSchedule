@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
     <color name="button_sheet_background">#EEEEEE</color>
+    <color name="courseName">#808080</color>
 </resources>

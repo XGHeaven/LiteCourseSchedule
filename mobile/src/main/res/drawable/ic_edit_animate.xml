@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<animated-vector
+    android:drawable="@drawable/ic_edit"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <target
+        android:animation="@animator/ic_editer"
+        android:name="edit"
+        >
+    </target>
+    <target
+        android:animation="@animator/ic_editer_width"
+        android:name="edit"
+        >
+    </target>
+</animated-vector>

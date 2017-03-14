@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<objectAnimator
+    android:duration="300"
+    android:propertyName="strokeWidth"
+    android:valueType="floatType"
+    android:valueFrom="20"
+    android:valueTo="10"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+</objectAnimator>

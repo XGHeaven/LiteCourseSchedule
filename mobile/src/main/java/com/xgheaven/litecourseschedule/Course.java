@@ -1,15 +1,6 @@
 package com.xgheaven.litecourseschedule;
 
 
-import android.content.SharedPreferences;
-import android.util.Log;
-
-import com.alibaba.fastjson.JSON;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Course {
     private String name = "", classroom = "", id = "", teacher = "";
     private int start = 0, last = 0, day = 0;
