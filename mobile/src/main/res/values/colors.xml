@@ -6,4 +6,7 @@
     <color name="white">#FFFFFF</color>
     <color name="button_sheet_background">#EEEEEE</color>
     <color name="courseName">#808080</color>
+    <color name="courseFinished">#3F51B5</color>
+    <color name="courseProgressing">#ff0000</color>
+    <color name="courseAccessing">#999999</color>
 </resources>

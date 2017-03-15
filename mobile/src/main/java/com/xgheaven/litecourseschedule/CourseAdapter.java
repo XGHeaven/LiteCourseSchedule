@@ -34,7 +34,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
 
     private static class CourseViewHolder extends BaseViewHolder {
         public LinearLayout body;
-        public TextView name, info;
+        public TextView name, info, startTime, endTime, progress;
         public FrameLayout more_action;
         private Course course;
         private RecyclerView.Adapter adapter;
@@ -42,6 +42,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
             super(itemView, context);
             name = (TextView) itemView.findViewById(R.id.course_name);
             info = (TextView) itemView.findViewById(R.id.course_info);
+            startTime = (TextView) itemView.findViewById(R.id.course_start_time);
+            endTime = (TextView) itemView.findViewById(R.id.course_end_time);
+            progress = (TextView) itemView.findViewById(R.id.course_progress);
             this.adapter = adapter;
 
             itemView.findViewById(R.id.course_item_body).setOnClickListener(new View.OnClickListener() {
@@ -71,6 +74,23 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
             this.course = course;
             name.setText(course.getName());
             info.setText(course.getClassroom() + " （" + course.getStart() + "-" + course.getEnd() + "）");
+            startTime.setText(Course.COURSE_TIMES.get(course.getStart() - 1).first);
+            endTime.setText(Course.COURSE_TIMES.get(course.getEnd() - 1).second);
+
+            int res = 0;
+            switch (course.isCurrent()) {
+                case -1:
+                    res = R.color.courseAccessing;
+                    break;
+                case 0:
+                    res = R.color.courseProgressing;
+                    break;
+                case 1:
+                    res = R.color.courseFinished;
+                    break;
+            }
+
+            progress.setBackgroundResource(res);
         }
     }
 
