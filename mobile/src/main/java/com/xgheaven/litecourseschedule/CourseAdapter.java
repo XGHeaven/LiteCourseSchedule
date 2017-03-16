@@ -1,6 +1,7 @@
 package com.xgheaven.litecourseschedule;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -47,10 +48,25 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
             progress = (TextView) itemView.findViewById(R.id.course_progress);
             this.adapter = adapter;
 
+            itemView.findViewById(R.id.course_item_body).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Msg.confirm(context, R.string.course_delete_title, R.string.course_delete_message, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            int pos = CourseList.getInstance().remove(course);
+                            adapter.notifyItemRemoved(pos);
+                            Msg.info(((MainActivity)context).findViewById(R.id.main_course_list), R.string.course_delete_success);
+                        }
+                    }, null);
+                    Log.d("Adapter", "LongClick");
+                    return true;
+                }
+            });
+
             itemView.findViewById(R.id.course_item_body).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("item", "123");
                     Intent transitionIntent = new Intent(context, CourseDetail.class);
                     transitionIntent.putExtra("courseIndex", CourseList.getInstance().indexOf(course));
 

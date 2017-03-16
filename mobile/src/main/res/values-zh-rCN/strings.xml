@@ -42,4 +42,6 @@
     <string name="about_title">关于</string>
     <string name="about_text">轻课程表, 轻, 仅仅是轻. 欢迎反馈问题.</string>
     <string name="course_scan_failed">课程扫描失败！</string>
+    <string name="course_delete_message">要删除当前课程么</string>
+    <string name="course_delete_title">删除课程</string>
 </resources>
