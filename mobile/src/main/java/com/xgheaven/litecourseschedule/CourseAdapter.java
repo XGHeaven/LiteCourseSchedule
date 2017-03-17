@@ -15,12 +15,11 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHolder> {
     private static final int DIVIDE_TYPE = 0, DATA_TYPE = 1;
     private CourseList courseList;
 
-    public static abstract class BaseViewHolder extends RecyclerView.ViewHolder {
+    public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
 
         protected Context context;
 
@@ -33,20 +32,20 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
         abstract public void setData(Course course);
     }
 
-    private static class CourseViewHolder extends BaseViewHolder {
+    private class CourseViewHolder extends BaseViewHolder {
         public LinearLayout body;
         public TextView name, info, startTime, endTime, progress;
         public FrameLayout more_action;
         private Course course;
         private RecyclerView.Adapter adapter;
-        public CourseViewHolder(View itemView, final Context context, final CourseAdapter adapter) {
+        public CourseViewHolder(View itemView, final Context context) {
             super(itemView, context);
             name = (TextView) itemView.findViewById(R.id.course_name);
             info = (TextView) itemView.findViewById(R.id.course_info);
             startTime = (TextView) itemView.findViewById(R.id.course_start_time);
             endTime = (TextView) itemView.findViewById(R.id.course_end_time);
             progress = (TextView) itemView.findViewById(R.id.course_progress);
-            this.adapter = adapter;
+            this.adapter = CourseAdapter.this;
 
             itemView.findViewById(R.id.course_item_body).setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -70,16 +69,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
                     Intent transitionIntent = new Intent(context, CourseDetail.class);
                     transitionIntent.putExtra("courseIndex", CourseList.getInstance().indexOf(course));
 
-                    LinearLayout placeNameHolder = (LinearLayout) v.findViewById(R.id.course_item_body);
                     TextView name = (TextView) v.findViewById(R.id.course_name);
-                    TextView info = (TextView) v.findViewById(R.id.course_info);
-
-                    Pair<View, String> holderPair = Pair.create((View) placeNameHolder, "course_detail");
                     Pair<View, String> namePair = Pair.create((View) name, "course_name");
-                    Pair<View, String> infoPair = Pair.create((View) info, "course_info");
 
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((MainActivity)context, namePair);
-//                    ActivityOptionsCompat options = ActivityOptionsCompat.makeScaleUpAnimation(v, v.getLeft(), v.getTop(), v.getWidth(), v.getHeight());
                     ActivityCompat.startActivityForResult((MainActivity)context, transitionIntent, 100, options.toBundle());
                 }
             });
@@ -110,7 +103,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
         }
     }
 
-    private static class DivideViewHolder extends BaseViewHolder {
+    private class DivideViewHolder extends BaseViewHolder {
 
         public TextView header;
 
@@ -138,7 +131,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
         switch (viewType) {
             case DATA_TYPE:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_item, parent, false);
-                vh = new CourseViewHolder(v, parent.getContext(), this);
+                vh = new CourseViewHolder(v, parent.getContext());
                 break;
             case DIVIDE_TYPE:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_subheader, parent, false);
