@@ -2,13 +2,12 @@ package com.xgheaven.litecourseschedule;
 
 
 import android.support.v4.util.Pair;
-import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Course {
     private String name = "", classroom = "", id = "", teacher = "";
@@ -134,9 +133,17 @@ public class Course {
         int nDay = (now.get(Calendar.DAY_OF_WEEK) + 5) % 7;
         if (nDay > day) return 1;
         if (nDay < day) return -1;
-        String time = new SimpleDateFormat("HH:mm").format(now.getTime());
+        String time = new SimpleDateFormat("HH:mm", Locale.CHINA).format(now.getTime());
         if (time.compareTo(COURSE_TIMES.get(getEnd() - 1).second) > 0) return 1;
         if (time.compareTo(COURSE_TIMES.get(start - 1).first) < 0) return -1;
+        return 0;
+    }
+
+    public int isCurrentDay() {
+        Calendar now = Calendar.getInstance();
+        int day = (now.get(Calendar.DAY_OF_WEEK) + 5) % 7;
+        if (day > this.day) return 1;
+        if (day < this.day) return -1;
         return 0;
     }
 

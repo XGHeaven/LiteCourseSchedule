@@ -113,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
         courseView = (RecyclerView)findViewById(R.id.main_course_list);
         courseView.setLayoutManager(new LinearLayoutManager(this));
         courseView.setAdapter(courseAdapter);
+
+        courseView.scrollToPosition(courseList.getCurrentDivideIndex());
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -139,8 +141,8 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-
         String string = result.getContents();
+        Log.d("Scan", string);
         try {
             Log.d("Scan", string);
             courseList.clear();

@@ -7,6 +7,8 @@ import com.alibaba.fastjson.JSON;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class CourseList {
@@ -134,5 +136,17 @@ public class CourseList {
         }
 
         return JSON.toJSONString(nCourses);
+    }
+
+    public int getCurrentDivideIndex() {
+        Calendar calendar = Calendar.getInstance();
+        int day = (calendar.get(Calendar.DAY_OF_WEEK) + 5) % 7;
+        for (int i=0; i<courses.size(); i++) {
+            Course course = courses.get(i);
+            if (course.isDivide() && course.getDay() == day) {
+                return i;
+            }
+        }
+        return 0;
     }
 }

@@ -53,7 +53,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
                     Msg.confirm(context, R.string.course_delete_title, R.string.course_delete_message, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            int pos = CourseList.getInstance().remove(course);
+                            int pos = courseList.remove(course);
                             adapter.notifyItemRemoved(pos);
                             Msg.info(((MainActivity)context).findViewById(R.id.main_course_list), R.string.course_delete_success);
                         }
@@ -85,7 +85,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
             info.setText(course.getClassroom() + " （" + course.getStart() + "-" + course.getEnd() + "）");
             startTime.setText(Course.COURSE_TIMES.get(course.getStart() - 1).first);
             endTime.setText(Course.COURSE_TIMES.get(course.getEnd() - 1).second);
-
             int res = 0;
             switch (course.isCurrent()) {
                 case -1:
@@ -116,6 +115,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.BaseViewHo
         public void setData(Course course) {
             String[] res = context.getResources().getStringArray(R.array.week_name);
             header.setText(res[course.getDay()]);
+            if (course.isCurrentDay() == 0) {
+                ((LinearLayout)header.getParent()).setElevation(Utils.dp2Px(4));
+            } else {
+                ((LinearLayout)header.getParent()).setElevation(Utils.dp2Px(2));
+            }
         }
     }
 
