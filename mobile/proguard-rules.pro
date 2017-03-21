@@ -15,3 +15,15 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+#-libraryjars libs/fastjson-1.1.56.android.jar
+
+-keepattributes Signature
+-keepattributes EnclosingMethod
+
+-keep class com.xgheaven.litecourseschedule.**
+-keep class com.alibaba.fastjson.**
+
+-keepclassmembers class com.xgheaven.litecourseschedule.Course {
+    public <methods>;
+}
